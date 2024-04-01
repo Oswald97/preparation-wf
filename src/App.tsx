@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Toaster } from "./components/ui/sonner";
 import { Header, NavMenu } from "./layouts";
 
 export function App() {
@@ -14,6 +15,7 @@ export function App() {
           <Outlet />
         </main>
       </div>
+      <Toaster closeButton />
     </div>
   );
 }

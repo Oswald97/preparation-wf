@@ -1,0 +1,1 @@
+export { oeuvreSchema as oeuvreSchema} from './oeuvre.schema'

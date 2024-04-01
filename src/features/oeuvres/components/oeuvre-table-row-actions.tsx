@@ -11,7 +11,7 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 
-export function DataTableRowActions({
+export function OeuvreTableRowActions({
   row,
 }: {row: Oeuvre}) {
   const oeuvre = row  
@@ -32,8 +32,7 @@ export function DataTableRowActions({
         <Link to={`${id}/livres`} >
         <DropdownMenuItem >Voir les livres</DropdownMenuItem>
         </Link>
-        <DropdownMenuItem>Faire une réclamation</DropdownMenuItem>
-        <DropdownMenuItem>Voir les factures</DropdownMenuItem>
+        <DropdownMenuItem>Emprunter un livre</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

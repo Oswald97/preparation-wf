@@ -6,7 +6,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table";
-import { DataTableRowActions } from "./dataTable-row-actions";
+import { OeuvreTableRowActions } from "./oeuvre-table-row-actions";
+import OeuvreAddBtn from "./oeuvreAddBtn";
 
 export function oeuvresList() {
   const oeuvres: Oeuvre[] = [
@@ -25,6 +26,10 @@ export function oeuvresList() {
   ];
 
   return (
+    <>
+    <div className="flex justify-end mb-4">
+    <OeuvreAddBtn />
+    </div>
     <Table className="border border-slate-200 rounded-2xl">
       <TableHeader>
         <TableRow>
@@ -43,12 +48,13 @@ export function oeuvresList() {
             <TableCell>{oeuvre.auteur}</TableCell>
             <TableCell>{oeuvre.nombreLivreLibre}</TableCell>
             <TableCell className="">
-              <DataTableRowActions row={oeuvre} />
+              <OeuvreTableRowActions row={oeuvre} />
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
+    </>
   );
 }
 

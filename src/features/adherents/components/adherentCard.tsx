@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const adherentCard = () => {
   return (
     <Link to={'1'} >
-      <Card className="shadow-md max-w-lg cursor-pointer">
+      <Card className="shadow-sm max-w-lg cursor-pointer hover:scale-105">
         <CardContent>
           <div className="flex items-center gap-4">
             <Avatar className="hidden size-12 sm:flex">

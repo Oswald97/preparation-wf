@@ -1,4 +1,3 @@
-import { Button } from "@/src/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,14 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table";
-import { Plus } from "lucide-react";
+import AdherentAddEmpruntBtn from "./adherentAddEmpruntBtn";
 
 const MAX_ALLOWED_LOANS: number = 5
 
 const AdherentEmprunt = ({ emprunts }: { emprunts: Emprunt[] }) => {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center">
+      <CardHeader className="block sm:flex gap-4 flex-row items-center">
         <div className="grid gap-2">
           <CardTitle>Emprunts en cours</CardTitle>
           <CardDescription>
@@ -30,10 +29,7 @@ const AdherentEmprunt = ({ emprunts }: { emprunts: Emprunt[] }) => {
         </div>
         <>
           {emprunts.length < MAX_ALLOWED_LOANS && (
-            <Button size="sm" className="ml-auto gap-1">
-              Ajouter
-              <Plus className="size-4" />
-            </Button>
+            <AdherentAddEmpruntBtn />
           )}
         </>
       </CardHeader>
