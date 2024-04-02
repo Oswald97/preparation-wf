@@ -12,9 +12,8 @@ import { Link } from "react-router-dom"
 
 
 export function OeuvreTableRowActions({
-  row,
+  row: oeuvre,
 }: {row: Oeuvre}) {
-  const oeuvre = row  
   const id = "1"
 
   return (

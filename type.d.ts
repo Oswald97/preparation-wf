@@ -33,3 +33,9 @@ type Emprunt = {
     livre?: Oeuvre,
     adherent?: Adherent
 }
+
+type Livre<Oeuvretype> = {
+    oeuvre: Oeuvretype,
+    numeroInventaire: string,
+    etatLivre: boolean
+}
