@@ -66,9 +66,8 @@ const NavigationLink = ({ navProps }: { navProps: NavProps }) => {
   return (
     <NavLink
       to={navProps.to}
-      className={({ isActive }: { isActive: boolean }) =>
-          isActive ? "flex items-center gap-3 rounded-lg p-4 transition-all hover:text-primary bg-muted text-primary" : "flex items-center gap-3 rounded-lg p-4 text-muted-foreground transition-all hover:text-primary"
-      }
+      className={({ isActive }: { isActive: boolean }) => `flex items-center gap-3 rounded-lg p-4 transition-all hover:text-primary ${isActive ? "bg-muted text-primary" : "text-muted-foreground"}`
+        }
     >
       <navProps.icon className="h-4 w-4" />
       {navProps.name}
