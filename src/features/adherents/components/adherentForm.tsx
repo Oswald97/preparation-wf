@@ -12,30 +12,42 @@ import { useCreateForm } from "@/src/hooks";
 import { toast } from "sonner";
 import { adherentSchema } from "../schema";
 import { PhoneInput } from "@/src/components/ui/phone-input";
+import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
+import { ADHERENT_URL } from "@/src/utils/_constants";
+import useMutation from "@/src/hooks/useMutation";
+import { Loader } from "lucide-react";
 
-export function AdherentForm() {
+export function AdherentForm({ setAdherent }: any) {
   const form = useCreateForm(adherentSchema, {
     nom: "",
     pseudo: "",
     prenoms: "",
     adresse: {
-      rue: "Rue",
+      rue: "",
       ville: "",
       codePostal: "",
       numeroTelephone: "",
     },
+    genre: "MASCULIN",
+    dateInscription: new Date(),
   });
 
-  const onSubmit = (data: any) => {
-    console.log("submitted", data);
+  const {
+    isLoading: isCreating,
+    handleMutation: createAdherent,
+    responseData,
+  } = useMutation();
 
-    toast("You submitted the following values:", {
-      description: (
-        <pre className="mt-2 w-full rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  const onSubmit = async (data: any) => {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    await createAdherent(ADHERENT_URL, options);
+
+    setAdherent((adherents:Adherent[]) =>  [...adherents, {...data, id: "new-adherent"}]);
+    toast("You submitted the following values:", {});    
   };
 
   return (
@@ -76,6 +88,42 @@ export function AdherentForm() {
                 <FormLabel className="text-slate-900">Pseudo</FormLabel>
                 <FormControl>
                   <Input placeholder="johndoe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="genre"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>Genre</FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex space-x-3"
+                  >
+                    <FormItem className="flex items-center space-x-1 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="MASCULIN" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Masculin</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-1 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="FEMININ" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Féminin</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-1 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="INCONNU" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Inconnu</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -142,6 +190,7 @@ export function AdherentForm() {
             type="submit"
             disabled={!form.formState?.isValid}
           >
+            {isCreating && <Loader />}
             Créer
           </Button>
         </form>

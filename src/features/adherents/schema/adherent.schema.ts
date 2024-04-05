@@ -16,4 +16,11 @@ export const adherentSchema = z.object({
     codePostal: z.string().nullable(),
     numeroTelephone: z.string(),
   }),
+  genre: z.enum(["MASCULIN", "FEMININ", "INCONNU"], {
+    required_error: "Vous devez sélectionner votre genre",
+  }),
+  dateInscription: z.date({
+    required_error: "Vous devez sélectionner votre genre",
+  }),
+  nombreEmpruntEnCours: z.number().default(0),
 });

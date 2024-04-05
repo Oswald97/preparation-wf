@@ -1,41 +1,42 @@
 type User = {
-    name: string;
-    email: string
-}
+  name: string;
+  email: string;
+};
 
 type Adherent = {
-    id?: string;
-    pseudo:string;
-    name: string;
-    prenom: string;
+  id?: string;
+  pseudo: string;
+  nom: string;
+  prenoms: string;
+  adresse: {
     rue: string;
     ville: string;
     codePostale: string;
     numeroTelephone: string;
-    dateInscription: Date;
-    nombreEmpruntEnCours: number;
-}
+  };
+  dateInscription: Date;
+  nombreEmpruntEnCours: number;
+};
 
-
-type Oeuvre = { 
-    id?: string;
-    isbn: string;
-    titre: string;
-    auteur: string;
-    nombreLivreLibre: number;
-}
+type Oeuvre = {
+  id?: string;
+  isbn: string;
+  titre: string;
+  auteur: string;
+  nombreLivreLibre: number;
+};
 
 type Emprunt = {
-    id?: string;
-    dateRetourTheorique: string;
-    dateRetourEffective?: string | null;
-    nombreRappel: number,
-    livre?: Oeuvre,
-    adherent?: Adherent
-}
+  id?: string;
+  dateRetourTheorique: string;
+  dateRetourEffective?: string | null;
+  nombreRappel: number;
+  livre?: Oeuvre;
+  adherent?: Adherent;
+};
 
 type Livre<Oeuvretype> = {
-    oeuvre: Oeuvretype,
-    numeroInventaire: string,
-    etatLivre: boolean
-}
+  oeuvre: Oeuvretype;
+  numeroInventaire: string;
+  etatLivre: boolean;
+};

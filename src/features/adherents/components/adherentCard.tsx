@@ -6,7 +6,7 @@ import {
 import { Card, CardContent } from "@/src/components/ui/card";
 import { Link } from "react-router-dom";
 
-const adherentCard = () => {
+const adherentCard = ({adherent} : {adherent: Adherent}) => {
   return (
     <Link to={'1'} >
       <Card className="shadow-sm max-w-lg cursor-pointer hover:scale-105">
@@ -17,9 +17,9 @@ const adherentCard = () => {
               <AvatarFallback>OM</AvatarFallback>
             </Avatar>
             <div className="grid gap-1">
-              <p className="text-sm font-medium leading-none">Olivia Martin</p>
+              <p className="text-sm font-medium leading-none">{`${adherent.nom} ${adherent.prenoms}`}</p>
               <p className="text-sm text-muted-foreground">
-                olivia.martin@email.com
+                {adherent.pseudo}
               </p>
             </div>
           </div>

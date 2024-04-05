@@ -9,14 +9,15 @@ import {
   SheetTrigger,
 } from "@/src/components/ui/sheet";
 import { AdherentForm } from "./adherentForm";
+import { useNavigate } from "react-router-dom";
 
-const AdherentAddBtn = () => {
+const AdherentAddBtn = ({setAdherent}: any) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button size="sm" className="ml-auto gap-1">
           Ajouter
-          <Plus className="size-4" />
+          <Plus className="size-4 " />
         </Button>
       </SheetTrigger>
       {/* J'ai dû modifier le component sheet pour la responsivité */}
@@ -25,7 +26,7 @@ const AdherentAddBtn = () => {
           <SheetTitle>Ajouter un Adhérent</SheetTitle>
         </SheetHeader>
         
-        <AdherentForm />
+        <AdherentForm setAdherent={setAdherent} />
       </SheetContent>
     </Sheet>
   );

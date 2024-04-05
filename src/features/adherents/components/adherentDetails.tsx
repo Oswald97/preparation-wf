@@ -5,12 +5,14 @@ export function adherentDetails() {
   const adherent: Adherent = {
     id: "johndoe",
     pseudo: "johndoe",
-    name: "DOE",
-    prenom: "John",
-    rue: "Champ d'oiseaux",
+    nom: "DOE",
+    prenoms: "John",
+    adresse: {
+      rue: "Champ d'oiseaux",
     ville: "Cotonou",
     codePostale: "229",
-    numeroTelephone: "+229 90909090",
+    numeroTelephone: "+229 90909090"
+    },
     dateInscription: new Date(),
     nombreEmpruntEnCours: 4,
   };
