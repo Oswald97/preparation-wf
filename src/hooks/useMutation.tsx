@@ -1,35 +1,36 @@
 import { useState } from "react";
 
 const useMutation = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<any>(null);
-  const [responseData, setResponseData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<null | { message: string }>(null);
+  const [data, setData] = useState([]);
 
-  const executeMutation = async (route: string, options: any) => {
-    setIsLoading(true);
+  async function getData(apiUrl: string, option: any = undefined) {
     try {
-      const response = await fetch(route, {...options});
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error("Une erreur s'est produite lors de la requête de mutation"
-        );
-      }      
+      const response = await fetch(apiUrl, option);
+      if (!response.ok) throw new Error("HTTP error " + response.status);
+
+      const dataResponse = await response.json();
+
+      setData(dataResponse);
       setIsLoading(false);
-      setResponseData((oldData:any) => {
-        console.log('While setting state',data)
-        return {...data}
-      });
-    } catch (error: any) {
-      setError("Une erreur inconnue s'est produite lors de la requête de mutation");
+      return dataResponse;
+    } catch (error) {
+      setError({ message: "Une erreur" });
       setIsLoading(false);
     }
+  }
+  const handleMutation = (
+    route: string,
+    option: any,
+    callbackFn: any
+  ) => {
+    getData(route, option).then((dataResponse) => {
+      callbackFn(dataResponse);
+    });
   };
 
-  const handleMutation = async (route: string, options: any) => {
-    await executeMutation(route, options);
-  };
-
-  return { isLoading, error, responseData, handleMutation };
+  return { isLoading, error, data, handleMutation };
 };
 
 export default useMutation;

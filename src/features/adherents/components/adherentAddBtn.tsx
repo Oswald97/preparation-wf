@@ -9,7 +9,6 @@ import {
   SheetTrigger,
 } from "@/src/components/ui/sheet";
 import { AdherentForm } from "./adherentForm";
-import { useNavigate } from "react-router-dom";
 
 const AdherentAddBtn = ({setAdherent}: any) => {
   return (

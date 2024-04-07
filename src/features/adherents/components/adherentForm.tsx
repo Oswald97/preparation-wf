@@ -16,7 +16,7 @@ import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
 import { ADHERENT_URL } from "@/src/utils/_constants";
 import useMutation from "@/src/hooks/useMutation";
 import { Loader } from "lucide-react";
-
+import { useDispatch } from "react-redux";
 export function AdherentForm({ setAdherent }: any) {
   const form = useCreateForm(adherentSchema, {
     nom: "",
@@ -32,10 +32,11 @@ export function AdherentForm({ setAdherent }: any) {
     dateInscription: new Date(),
   });
 
+  const dispatch = useDispatch();
+
   const {
     isLoading: isCreating,
-    handleMutation: createAdherent,
-    responseData,
+    handleMutation: createAdherent
   } = useMutation();
 
   const onSubmit = async (data: any) => {
@@ -44,11 +45,23 @@ export function AdherentForm({ setAdherent }: any) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
-    await createAdherent(ADHERENT_URL, options);
+    createAdherent(ADHERENT_URL, options, onSuccess);
 
-    setAdherent((adherents:Adherent[]) =>  [...adherents, {...data, id: "new-adherent"}]);
-    toast("You submitted the following values:", {});    
+    // setAdherent((adherents: Adherent[]) => [
+    //   ...adherents,
+    //   { ...data, id: "new-adherent" },
+    // ]);
+
+    dispatch({ type: "addAdherent", payload: { ...data, id: "new-adherent" } });
+    toast("You submitted the following values:", {});
   };
+
+  const onSuccess = (adherentCreated: Adherent) => {
+    setAdherent((oldData: Adherent[]) => {
+      console.log(adherentCreated, "inside handleMutation");
+      return [...oldData, adherentCreated];
+    });
+  }
 
   return (
     <>
