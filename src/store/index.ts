@@ -1,8 +1,5 @@
 // import { createStore } from "redux";
 
-import { configureStore } from "@reduxjs/toolkit";
-import adherentSlice from "./slices/adherent.slice";
-
 // const initialAdherentState = {
 //   adherentList: [],
 // };
@@ -27,26 +24,17 @@ import adherentSlice from "./slices/adherent.slice";
 // const store = createStore(adherentReducer);
 // export default store;
 
-// // Provide now this store in main.tsx
-
-
+import { configureStore } from "@reduxjs/toolkit";
+import { adherentApi } from "../features/adherents/services";
+import adherentSlice from "./slices/adherent.slice";
 
 const reducers = {
   [adherentSlice.name]: adherentSlice.reducer,
+  [adherentApi.reducerPath]: adherentApi.reducer,
 };
 
-
 export const store = configureStore({
-  reducer: reducers
+  reducer: reducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(adherentApi.middleware),
 });
-
-
-/**
- * middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware({
-          serializableCheck: false
-      }).concat([
-          postApi.middleware
-      ]);
-  },
- */
