@@ -5,6 +5,7 @@ import AdherentAddBtn from "./adherentAddBtn";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { setAdherents } from "@/src/store/slices/adherent.slice";
 
 const adherentList = () => {
   const {
@@ -14,12 +15,17 @@ const adherentList = () => {
     error,
   } = useFetch(ADHERENT_URL);
 
+  // const dispatch = useDispatch();
+  // const adherentList = useSelector((state: any) => state.adherentList);  
   const dispatch = useDispatch();
-  const adherentList = useSelector((state: any) => state.adherentList);  
 
   useEffect(() => {
-    dispatch({ type: "setAdherents", payload: adherents });
+    dispatch(setAdherents(adherents));
   }, [adherents]);
+
+  const { adherentList } = useSelector((state: any) => state.adherent);
+
+  
 
   if (isLoading) return <p>En cours de chargement ...</p>;
   if (error) return <p> Une erreur s'est produite</p>;
@@ -27,7 +33,7 @@ const adherentList = () => {
   return (
     <>
       <div className="flex justify-end mb-4">
-        <AdherentAddBtn setAdherent={setAdherent} />
+        <AdherentAddBtn />
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
         {adherentList.length > 0 && adherentList.map((adherent: Adherent) => (

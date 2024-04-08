@@ -17,7 +17,8 @@ import { ADHERENT_URL } from "@/src/utils/_constants";
 import useMutation from "@/src/hooks/useMutation";
 import { Loader } from "lucide-react";
 import { useDispatch } from "react-redux";
-export function AdherentForm({ setAdherent }: any) {
+import { addNewAdherent, toogleSheet } from "@/src/store/slices/adherent.slice";
+export function AdherentForm() {
   const form = useCreateForm(adherentSchema, {
     nom: "",
     pseudo: "",
@@ -52,15 +53,18 @@ export function AdherentForm({ setAdherent }: any) {
     //   { ...data, id: "new-adherent" },
     // ]);
 
-    dispatch({ type: "addAdherent", payload: { ...data, id: "new-adherent" } });
     toast("You submitted the following values:", {});
   };
 
   const onSuccess = (adherentCreated: Adherent) => {
-    setAdherent((oldData: Adherent[]) => {
-      console.log(adherentCreated, "inside handleMutation");
-      return [...oldData, adherentCreated];
-    });
+    // setAdherent((oldData: Adherent[]) => {
+    //   return [...oldData, adherentCreated];
+    // });
+
+    // dispatch({ type: "addAdherent", payload: { ...data, id: "new-adherent" } });
+
+    dispatch(addNewAdherent(adherentCreated))
+    dispatch(toogleSheet())
   }
 
   return (
