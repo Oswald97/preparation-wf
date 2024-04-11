@@ -14,20 +14,23 @@ import { LS_TOKEN_KEY } from "@/src/utils/_constants";
 import { BookOpenText } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { loginSchema } from "../schema";
-import { useLoginMutation } from "../services";
+import { registerSchema } from "../schema";
+import { useRegisterMutation } from "../services";
 
-export function Login() {
-  const form = useCreateForm(loginSchema, {
+export function Register() {
+  const form = useCreateForm(registerSchema, {
     email: "",
+    lastname: "",
+    firstname: "",
+    role: "USER",
     password: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [logUser, { isLoading }] = useLoginMutation();
+  const [registerUser, { isLoading }] = useRegisterMutation();
 
-  const onSubmit = (credentials: z.infer<typeof loginSchema>) => {
-    logUser(credentials).then((response: any) => {
+  const onSubmit = (credentials: z.infer<typeof registerSchema>) => {
+    registerUser(credentials).then((response: any) => {
       if (response.error) {
         // Traiter l'erreur
 
@@ -35,7 +38,7 @@ export function Login() {
       }
 
       localStorage.setItem(LS_TOKEN_KEY, JSON.stringify(response?.data));
-      navigate("/adherents")
+      navigate("/adherents");
     });
   };
 
@@ -52,6 +55,38 @@ export function Login() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
+              <FormField
+                control={form.control}
+                name="lastname"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-slate-900">
+                      Nom
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="firstname"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-slate-900">
+                      Prénoms
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="email"
@@ -95,9 +130,9 @@ export function Login() {
               </Button>
 
               <div className="mt-4 text-center text-sm">
-                Vous n'avez pas de compte
-                <Link to="/auth/register" className="underline">
-                  S'inscrire
+                Vous avez déjà un compte?
+                <Link to="/auth/login" className="underline">
+                  Se connecter
                 </Link>
               </div>
             </form>

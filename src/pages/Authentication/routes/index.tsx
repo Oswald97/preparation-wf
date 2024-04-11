@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import Authentication from "../Authentication";
-import { Login } from "@/src/features/authentication/components";
+import { Login, Register } from "@/src/features/authentication/components";
 
 export const authRoutes: RouteObject = {
   path: "/auth",
@@ -10,6 +10,11 @@ export const authRoutes: RouteObject = {
       index: true,
       path: "login",
       element: <Login />,
+    },
+    {
+      index: true,
+      path: "register",
+      element: <Register />,
     },
   ],
 };
