@@ -13,11 +13,10 @@ import { toast } from "sonner";
 import { adherentSchema } from "../schema";
 import { PhoneInput } from "@/src/components/ui/phone-input";
 import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group";
-import { ADHERENT_URL } from "@/src/utils/_constants";
-import useMutation from "@/src/hooks/useMutation";
 import { Loader } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addNewAdherent, toogleSheet } from "@/src/store/slices/adherent.slice";
+import { useCreateAdherentMutation } from "../services";
 export function AdherentForm() {
   const form = useCreateForm(adherentSchema, {
     nom: "",
@@ -35,25 +34,21 @@ export function AdherentForm() {
 
   const dispatch = useDispatch();
 
-  const {
-    isLoading: isCreating,
-    handleMutation: createAdherent
-  } = useMutation();
+  // const {
+  //   isLoading: isCreating,
+  //   handleMutation: createAdherent
+  // } = useMutation();
 
-  const onSubmit = async (data: any) => {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    createAdherent(ADHERENT_URL, options, onSuccess);
+  const [createAdherent, { isLoading }] = useCreateAdherentMutation();
 
-    // setAdherent((adherents: Adherent[]) => [
-    //   ...adherents,
-    //   { ...data, id: "new-adherent" },
-    // ]);
 
-    toast("You submitted the following values:", {});
+  const onSubmit = (data: any) => {
+
+    createAdherent(data);
+    dispatch(toogleSheet());
+    toast("Succès", {
+      description: `Vous avez créer avec succès l'adhérent ${data.nom} ${data.prenoms}`
+    });
   };
 
   const onSuccess = (adherentCreated: Adherent) => {
@@ -207,7 +202,7 @@ export function AdherentForm() {
             type="submit"
             disabled={!form.formState?.isValid}
           >
-            {isCreating && <Loader />}
+            {isLoading && <Loader />}
             Créer
           </Button>
         </form>

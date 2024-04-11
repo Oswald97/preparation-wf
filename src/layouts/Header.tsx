@@ -1,5 +1,6 @@
 import { CircleUser, Menu } from "lucide-react";
 import React from "react";
+import { Form } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import {
   DropdownMenu,
@@ -40,7 +41,11 @@ const Header = () => {
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Form action="/logout" method="post">
+                <button>Logout</button>
+              </Form>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

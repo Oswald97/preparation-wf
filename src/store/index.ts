@@ -26,15 +26,17 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { adherentApi } from "../features/adherents/services";
+import { authApi } from "../features/authentication/services";
 import adherentSlice from "./slices/adherent.slice";
 
 const reducers = {
   [adherentSlice.name]: adherentSlice.reducer,
   [adherentApi.reducerPath]: adherentApi.reducer,
+  [authApi.reducerPath]: authApi.reducer,
 };
 
 export const store = configureStore({
   reducer: reducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(adherentApi.middleware),
+    getDefaultMiddleware().concat(adherentApi.middleware, authApi.middleware),
 });
